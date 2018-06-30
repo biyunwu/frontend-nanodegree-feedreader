@@ -55,7 +55,11 @@ $(function() {
     /* TODO: Write a new test suite named "The menu" */
     describe('The menu', function(){
 
-        let isHidden = () => document.querySelector('body').className.includes('menu-hidden');
+        beforeEach(function(done) {
+            setTimeout(function() {
+            done();
+            }, 500);
+        });
 
         /* TODO: Write a test that ensures the menu element is
          * hidden by default. You'll have to analyze the HTML and
@@ -71,17 +75,29 @@ $(function() {
           * should have two expectations: does the menu display when
           * clicked and does it hide when clicked again.
           */
+
+        const isHidden = () => document.querySelector('body').className.includes('menu-hidden');
+
         let clickSimulator = callback => {
-            document.querySelector('.icon-list').click();
-            return callback();
+            // console.log('original:', callback())
+            if(callback()){
+                document.querySelector('.icon-list').click();
+                // console.log('after clicked:', callback());
+                return !callback();
+            } else {
+                document.querySelector('.icon-list').click();
+                // console.log('after clicked:', callback());
+                return callback();
+            }
         }
-            
-        it('the menu changes visibility when the menu icon is clicked', function(){
-            // After the first click, body element's 'menu-hidden' class is removed.
-            expect(clickSimulator(isHidden)).toBe(false);
-            // After the second click, body element's 'menu-hidden' class is restored.
-            expect(clickSimulator(isHidden)).toBe(true);
-        });
+        
+        // Click the menu icon for 10 times.
+        for (let i=0; i<10; i++){
+            it(`the menu changes visibility when the menu icon is clicked - test case ${i+1}`, function(done){
+                expect(clickSimulator(isHidden)).toBe(true);
+                done();
+            });
+        }
     }); 
 
     /* TODO: Write a new test suite named "Initial Entries" */
@@ -117,11 +133,10 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-        let previousFeedTitle,
-            previousFeedText;
+        let previousFeedText;
+
         // There is no need to empty the container since this function is already offered in loadFeed().
         beforeEach(function(done) {
-            previousFeedTitle = document.querySelector('h1').innerText;
             previousFeedText = document.querySelector('.feed').innerText;
             setTimeout(function() {
             done();
@@ -130,9 +145,10 @@ $(function() {
 
         for(let i=0; i<allFeeds.length; i++){
             it(`when a new feed is loaded by the loadFeed function that the content actually changes - test case ${i+1}`, function(done){
+                console.log(previousFeedText);
                 loadFeed(i);
-                expect(document.querySelector('h1').innerText).not.toEqual(previousFeedTitle);
-                expect(document.querySelector('.feed')).not.toEqual(previousFeedText);
+                expect(document.querySelector('.feed').innerText).not.toEqual(previousFeedText);
+                console.log(document.querySelector('.feed').innerText);
                 done();
             });
         }
