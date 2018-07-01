@@ -145,10 +145,8 @@ $(function() {
 
         for(let i=0; i<allFeeds.length; i++){
             it(`when a new feed is loaded by the loadFeed function that the content actually changes - test case ${i+1}`, function(done){
-                console.log(previousFeedText);
                 loadFeed(i);
                 expect(document.querySelector('.feed').innerText).not.toEqual(previousFeedText);
-                console.log(document.querySelector('.feed').innerText);
                 done();
             });
         }
