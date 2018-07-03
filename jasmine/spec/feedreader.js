@@ -92,17 +92,21 @@ $(function() {
          * by the loadFeed function that the content actually changes.
          */
         let previousFeedEntries;
+        const getEntries = () => document.querySelectorAll('.feed .entry');
 
         beforeEach(function(done) {
-            // Before new contents are rendered, store the current entries for further comparison.
-            previousFeedEntries = document.querySelectorAll('.feed .entry');
-            loadFeed(2, function () {
-                done();
+            // Call .loadFeed() to retreive new entries, store these entries for further comparison.
+            // Then, call .loadFeed() again.
+            loadFeed(1, function () {
+                previousFeedEntries = getEntries();
+                loadFeed(2, function () {
+                    done();
+                });
             });
         });
 
         it('when a new feed is loaded by the loadFeed function that the content actually changes', function(){
-            expect(document.querySelectorAll('.feed .entry')).not.toBe(previousFeedEntries);
+            expect(getEntries()).not.toBe(previousFeedEntries);
         });
     });
 }());
