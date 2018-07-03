@@ -17,4 +17,4 @@ The starter code is provided by [Udacity Front End Nanodgree Team](https://githu
 
 ## Contribution
 
-All pull request are welcome.
+All pull requests are welcome.
