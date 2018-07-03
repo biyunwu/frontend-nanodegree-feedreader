@@ -1,6 +1,6 @@
 ## Introduction
 
-This project is to test the integrity of Feed Reader web app. The test code is implemented thourgh [Jasmine](https://jasmine.github.io). The main function of the web app is to retreive feeding contents asyncronously according to users' preferences through Google API.
+This project is to test the integrity of the Feed Reader web app. The test code is implemented thourgh [Jasmine](https://jasmine.github.io). The main function of the web app is to retreive feeding contents asyncronously according to users' preferences through Google API.
 
 ## Test Specs
 
