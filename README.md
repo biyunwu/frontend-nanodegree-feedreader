@@ -9,7 +9,7 @@ There are 4 categorized test specs in the project. For more infomation, please r
 ![The screenshot of the testing result](img/jasmine.png)
 
 ## Run the Project
-Open `index.html` in browser to run the project. The latest Google Chrome is recommended.
+Open `index.html` in a browser to run the project. The latest Google Chrome is recommended.
 
 ## Attribution
 
