@@ -26,8 +26,7 @@ $(function() {
          */
         it('every feed has its URL defined and is not empty', function(){
             allFeeds.forEach(feed => {
-                expect(feed.url).toBeDefined();
-                expect(feed.url.length).not.toBe(0);
+                expect(feed.url).toBeTruthy(); // Equals to {expect(feed.url).toBeDefined(); expect(feed.url.length).not.toBe(0);}
             });
         });
 
@@ -77,13 +76,11 @@ $(function() {
          */
 
         beforeEach(function(done) {
-            loadFeed(0, function () {
-                done();
-            });
+            loadFeed(0, done)
         });
 
         it('after loadFeed() is called, there is at least 1 entry in .feed container', function(){
-            expect(document.querySelectorAll('.feed .entry').length).not.toEqual(0);
+            expect(document.querySelectorAll('.feed .entry').length).toBeGreaterThan(0);
         });
     });
 
@@ -91,22 +88,25 @@ $(function() {
         /* Test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          */
-        let previousFeedEntries;
-        const getEntries = () => document.querySelectorAll('.feed .entry');
+
+        let prevUrl, newUrl;
+        // Get the first entry's URL in `.feed` container.
+        const getTheFirstUrl = () => document.querySelector('.feed .entry-link').href;
 
         beforeEach(function(done) {
-            // Call .loadFeed() to retreive new entries, store these entries for further comparison.
-            // Then, call .loadFeed() again.
-            loadFeed(1, function () {
-                previousFeedEntries = getEntries();
-                loadFeed(2, function () {
+            // Call .loadFeed() to retreive new entries, store the first entry's URL for further comparison.
+            loadFeed(0, function () {
+                prevUrl = getTheFirstUrl();
+                // Then, call .loadFeed() again.
+                loadFeed(1, function () {
+                    newUrl = getTheFirstUrl();
                     done();
                 });
             });
         });
 
         it('when a new feed is loaded by the loadFeed function that the content actually changes', function(){
-            expect(getEntries()).not.toBe(previousFeedEntries);
+            expect(newUrl).not.toEqual(prevUrl);
         });
     });
 }());
